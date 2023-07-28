@@ -1,0 +1,10 @@
+stages:
+  - test
+
+validate_config:
+  image: docker:24.0-cli
+  stage: test
+  needs: []
+  script:
+    - docker compose config
+    #- docker compose run --rm service-frontend nginx -t

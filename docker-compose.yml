@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  service-frontend:
+    container_name: service-frontend
+    #depends_on:
+    #  - ...
+    restart: unless-stopped
+    #build: ./image
+    image: nginx:1.25.1
+    #init: true
+    #entrypoint: ...
+    #command: ...
+    #privileged: true
+    environment:
+      - TZ=Asia/Tokyo
+    #working_dir: ...
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./config/conf.d:/etc/nginx/conf.d:ro
+      - ./data/cache:/var/cache/nginx:rw
+      - ./data/log:/var/log/nginx:rw
+    #tmpfs:
+    #  - ...
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    ports:
+      - 80:80/tcp

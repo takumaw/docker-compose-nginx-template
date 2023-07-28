@@ -1,0 +1,16 @@
+[Unit]
+Description=service-proxy
+Documentation=My service proxy.
+Requires=docker.service
+After=docker.service
+
+[Service]
+SyslogIdentifier=service-proxy
+WorkingDirectory=/srv/service-proxy
+ExecStartPre=/usr/bin/docker compose down -t 30 --remove-orphans
+ExecStart=/usr/bin/docker compose up --timeout 30 --build --abort-on-container-exit --remove-orphans
+ExecStop=/usr/bin/docker compose down -t 30 --remove-orphans
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
